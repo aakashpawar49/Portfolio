@@ -10,7 +10,7 @@ const Footer = () => {
         <p>
           &copy; {currentYear} {profile.name}. Crafted with React, Vite, and Tailwind CSS.
         </p>
-        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+        {/* <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
           {profile.navigation.map((item) => (
             <a
               key={item.name}
@@ -20,7 +20,7 @@ const Footer = () => {
               {item.name}
             </a>
           ))}
-        </div>
+        </div> */}
       </div>
     </footer>
   );

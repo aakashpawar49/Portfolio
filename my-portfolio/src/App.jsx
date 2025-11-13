@@ -1,9 +1,10 @@
-// src/App.jsx
 import Navbar from './components/Navbar';
 import Hero from './sections/Hero';
 import About from './sections/About';
-import Projects from './sections/Projects';
+// import FullProjects from './sections/Projects'; // FullProjects is now a separate page, don't render on home
+import HomeProjects from './sections/HomeProjects';
 import Achievements from './sections/Achievements';
+import Contact from './sections/Contact';
 import Footer from './components/Footer';
 
 function App() {
@@ -14,8 +15,10 @@ function App() {
       <main>
         <Hero />
         <About />
-        <Projects />
+        <HomeProjects /> {/* ONLY the 3 featured projects appear here */}
+        {/* The FullProjects list is now a separate link and won't clutter the main page */}
         <Achievements />
+        <Contact />
       </main>
 
       <Footer />

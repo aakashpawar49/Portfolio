@@ -36,7 +36,7 @@ const Achievements = () => {
                     key={item.title}
                     className="flex items-start gap-4 rounded-xl border border-secondary/20 bg-white/5 p-4 shadow-lg shadow-black/10 transition hover:border-secondary/60"
                   >
-                    <IconComponent className="h-6 w-6 flex-shrink-0 text-secondary" />
+                    <IconComponent className="h-6 w-6 shrink-0 text-secondary" />
                     <div>
                       <p className="text-base font-semibold text-white">{item.title}</p>
                       <p className="mt-1 text-sm text-text-muted">{item.description}</p>
@@ -63,7 +63,7 @@ const Achievements = () => {
                     key={item.title}
                     className="flex items-start gap-4 rounded-xl border border-primary/20 bg-white/5 p-4 shadow-lg shadow-black/10 transition hover:border-primary/60"
                   >
-                    <IconComponent className="h-6 w-6 flex-shrink-0 text-primary" />
+                    <IconComponent className="h-6 w-6 shrink-0 text-primary" />
                     <div>
                       <p className="text-base font-semibold text-white">{item.title}</p>
                       <p className="mt-1 text-sm text-text-muted">{item.details}</p>

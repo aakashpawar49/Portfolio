@@ -2,7 +2,6 @@ import projectsData from '../data/projects';
 import ProjectCard from '../components/ProjectCard';
 
 const HomeProjects = () => {
-    // Filter for projects marked as major (isMajor: true) in src/data/projects.js
     const majorProjects = projectsData.filter(project => project.isMajor);
 
     return (

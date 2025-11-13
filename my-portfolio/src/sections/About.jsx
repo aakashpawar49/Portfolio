@@ -10,7 +10,7 @@ const About = () => {
           <h2 className="text-2xl font-bold text-white sm:text-3xl md:text-4xl">About Me & Core Skills</h2>
           {/* PROFESSIONAL REWRITE */}
           <p className="mt-2 text-xs text-text-muted sm:text-sm md:text-base">
-            Scripting engineer specializing in Python automation, secure backend logic, and scalable data processing.
+            Full Stack Dev integrating Python for automation with secure backend logic and exploring cloud.
           </p>
         </div>
 
@@ -24,7 +24,7 @@ const About = () => {
               </div>
               {/* PROFESSIONAL REWRITE */}
               <p className="text-xs leading-relaxed text-text-muted sm:text-sm">
-                Backend-focused engineer specializing in Python scripting, RESTful API design, and modular architecture. I prioritize secure, reliable systems for automation and AI-driven intelligence.
+                Backend-focused engineer specializing in MERN stack, RESTful API design, and modular architecture.
               </p>
               {/* PROFESSIONAL REWRITE */}
               <p className="rounded-lg border border-secondary/20 bg-secondary/10 p-2.5 text-xs text-text-light sm:p-3">

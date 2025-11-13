@@ -10,9 +10,9 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="relative flex min-h-[85vh] items-center overflow-hidden bg-gradient-to-b from-background via-background to-surface pt-20 sm:pt-24"
+      className="relative flex min-h-[85vh] items-center overflow-hidden bg-linear-to-b from-background via-background to-surface pt-20 sm:pt-24"
     >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(99,102,241,0.25),_rgba(17,24,39,0))]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(99,102,241,0.25),rgba(17,24,39,0))]" />
       <div className="relative z-10 mx-auto flex max-w-7xl flex-col-reverse items-center gap-8 px-4 pb-8 pt-6 sm:gap-10 sm:px-6 sm:pb-12 lg:flex-row lg:items-center lg:gap-16 lg:px-8">
         <div className="w-full space-y-5 text-center sm:space-y-6 lg:w-3/5 lg:text-left">
           <div className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-primary">
@@ -49,7 +49,7 @@ const Hero = () => {
             </a>
             <a
                 href={resumeUrl}
-                download // This attribute tells the browser to download the file
+                download
                 className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/5 px-6 py-2.5 text-xs font-semibold text-text-light transition hover:border-primary/40 hover:text-primary sm:px-8 sm:py-3 sm:text-sm"
             >
                 Download Resume
@@ -79,7 +79,7 @@ const Hero = () => {
         </div>
 
         <div className="relative flex w-full items-center justify-center sm:w-2/3 lg:w-2/5">
-          <div className="relative flex h-56 w-56 items-center justify-center rounded-full bg-gradient-to-br from-primary/70 via-primary/30 to-secondary/40 shadow-[0_20px_45px_rgba(99,102,241,0.35)] sm:h-72 sm:w-72 md:h-80 md:w-80 lg:h-96 lg:w-96">
+          <div className="relative flex h-56 w-56 items-center justify-center rounded-full bg-linear-to-br from-primary/70 via-primary/30 to-secondary/40 shadow-[0_20px_45px_rgba(99,102,241,0.35)] sm:h-72 sm:w-72 md:h-80 md:w-80 lg:h-96 lg:w-96">
             <div className="h-44 w-44 overflow-hidden rounded-full border border-white/20 shadow-inner shadow-black/40 sm:h-56 sm:w-56 md:h-64 md:w-64 lg:h-80 lg:w-80">
               <img
                 src={logoImage}

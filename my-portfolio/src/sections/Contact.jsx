@@ -7,10 +7,7 @@ const Contact = () => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     console.table(Object.fromEntries(formData.entries()));
-    // REMOVED alert() as per the instruction
-    // In a real application, replace this with a backend/API call (e.g., to Formspree, AWS Lambda, or a simple Express endpoint)
     e.currentTarget.reset(); 
-    // Show a success message in the UI instead of an alert
     const formMessage = document.getElementById('form-message');
     formMessage.textContent = "Thank you for your message! I will respond within 24 hours.";
     formMessage.classList.remove('hidden');
@@ -18,7 +15,7 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="bg-gradient-to-b from-background to-background/70 py-20">
+    <section id="contact" className="bg-linear-to-b from-background to-background/70 py-20">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto mb-12 max-w-2xl text-center">
           <h2 className="text-3xl font-bold text-white sm:text-4xl">Let’s Collaborate</h2>
@@ -32,7 +29,7 @@ const Contact = () => {
             <h3 className="text-xl font-semibold text-white">Send a Message</h3>
             <p className="mt-2 text-sm text-text-muted">
               {/* PROFESSIONAL REWRITE */}
-              Share your specific automation challenges or security objectives. I’ll help shape the technical plan for implementation.
+              Share your specific challenges or security objectives. We can catch up to it...
             </p>
 
             <form onSubmit={handleSubmit} className="mt-6 space-y-5">
@@ -92,7 +89,7 @@ const Contact = () => {
               <h3 className="text-lg font-semibold text-white">Based in</h3>
               <p className="mt-2 text-sm text-text-muted">
                 {/* PROFESSIONAL REWRITE - Location Awareness */}
-                I am currently based in Ahmedabad/Vadodara, India, and prioritize in-office collaboration while being available for remote communication.
+                I am currently based in Vadodara, India, and prioritize collaboration while being available for remote communication.
               </p>
               <div className="mt-6 inline-flex items-center gap-3 rounded-full border border-primary/30 bg-primary/10 px-4 py-2 text-sm font-semibold text-text-light">
                 <MapPin className="h-4 w-4 text-primary" />

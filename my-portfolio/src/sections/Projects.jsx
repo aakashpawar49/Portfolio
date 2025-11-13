@@ -13,7 +13,7 @@ const Projects = () => {
         <div className="mx-auto mb-12 max-w-4xl text-center">
           <h2 className="text-4xl font-extrabold text-white sm:text-5xl">Full Project List</h2>
           <p className="mt-4 text-lg text-text-muted">
-            A complete overview of personal projects, including demonstrations of **Python logic**, **DevOps tools**, and academic research.
+            A complete overview of personal projects, including demonstrations of Python logic, DevOps tools, and academic research.
           </p>
         </div>
 

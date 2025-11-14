@@ -6,7 +6,7 @@ export const hardSkills = {
 };
 
 export const softSkills = [
-    'Compelling stakeholder communication',
+    'Optimistic Team Player',
     'Structured problem solving',
     'Collaborative leadership',
     'Time management & adaptability',

@@ -1,4 +1,5 @@
 import { MotionConfig } from 'motion/react';
+import { Analytics } from '@vercel/analytics/react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import ScrollProgress from '@/components/motion/ScrollProgress';
@@ -37,6 +38,7 @@ function App() {
       </main>
 
       <Footer />
+      <Analytics />
     </MotionConfig>
   );
 }

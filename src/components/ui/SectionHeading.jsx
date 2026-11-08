@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
-import Reveal from './Reveal';
-import Accent from './Accent';
+import Reveal from '@/components/motion/Reveal';
+import Accent from '@/components/ui/Accent';
 
 // Section label + title, with an oversized outlined index number drifting behind it (parallax).
 const SectionHeading = ({ index, label, title, accent, description }) => {

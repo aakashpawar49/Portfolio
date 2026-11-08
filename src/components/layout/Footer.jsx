@@ -1,8 +1,8 @@
 import { useRef } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
 import { ArrowUp } from 'lucide-react';
-import profile from '../data/profile';
-import Magnetic from './Magnetic';
+import profile from '@/data/profile';
+import Magnetic from '@/components/motion/Magnetic';
 
 const YEAR = new Date().getFullYear();
 

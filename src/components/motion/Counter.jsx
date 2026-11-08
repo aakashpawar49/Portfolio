@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { animate, motion, useInView, useMotionValue, useReducedMotion, useTransform } from 'motion/react';
-import { EASE } from '../lib/motion';
+import { EASE } from '@/lib/motion';
 
 // Counts up to a label such as "05+" once visible, keeping zero-padding and suffix.
 const Counter = ({ value }) => {

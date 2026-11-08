@@ -1,7 +1,7 @@
 import { motion, useTransform } from 'motion/react';
 import { Atom, Server, Sparkles, Workflow } from 'lucide-react';
-import profile from '../data/profile';
-import { EASE } from '../lib/motion';
+import profile from '@/data/profile';
+import { EASE } from '@/lib/motion';
 
 const [roleTitle, roleFocus] = profile.role.split('|').map((part) => part.trim());
 

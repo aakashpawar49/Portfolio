@@ -1,13 +1,13 @@
 import { Fragment, useRef } from 'react';
 import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from 'motion/react';
 import { ArrowRight, Download, MapPin } from 'lucide-react';
-import profile from '../data/profile';
-import CodeWindow from '../components/CodeWindow';
-import Counter from '../components/Counter';
-import Magnetic from '../components/Magnetic';
-import SocialLinks from '../components/SocialLinks';
-import useMediaQuery from '../hooks/useMediaQuery';
-import { EASE } from '../lib/motion';
+import profile from '@/data/profile';
+import CodeWindow from '@/sections/hero/CodeWindow';
+import Counter from '@/components/motion/Counter';
+import Magnetic from '@/components/motion/Magnetic';
+import SocialLinks from '@/components/ui/SocialLinks';
+import useMediaQuery from '@/hooks/useMediaQuery';
+import { EASE } from '@/lib/motion';
 
 const { hero, highlights, resumeUrl, location, socialLinks, email } = profile;
 const ACCENT_WORDS = new Set((hero.headlineAccent ?? '').split(' ').filter(Boolean));

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { motion, useMotionTemplate, useMotionValue, useReducedMotion, useSpring } from 'motion/react';
-import useMediaQuery from '../hooks/useMediaQuery';
+import useMediaQuery from '@/hooks/useMediaQuery';
 
 // Soft light that trails the mouse across the page (mouse/trackpad only).
 const CursorGlow = () => {

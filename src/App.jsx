@@ -1,15 +1,15 @@
 import { MotionConfig } from 'motion/react';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import ScrollProgress from './components/ScrollProgress';
-import CursorGlow from './components/CursorGlow';
-import Hero from './sections/Hero';
-import Marquee from './sections/Marquee';
-import About from './sections/About';
-import Projects from './sections/Projects';
-import Achievements from './sections/Achievements';
-import Contact from './sections/Contact';
-import useLenis from './hooks/useLenis';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
+import ScrollProgress from '@/components/motion/ScrollProgress';
+import CursorGlow from '@/components/motion/CursorGlow';
+import Hero from '@/sections/hero/Hero';
+import Marquee from '@/sections/marquee/Marquee';
+import About from '@/sections/about/About';
+import Projects from '@/sections/projects/Projects';
+import Achievements from '@/sections/achievements/Achievements';
+import Contact from '@/sections/contact/Contact';
+import useLenis from '@/hooks/useLenis';
 
 function App() {
   useLenis();

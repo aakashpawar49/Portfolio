@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
-import profile from '../data/profile';
-import { hardSkills } from '../data/skills';
+import profile from '@/data/profile';
+import { hardSkills } from '@/data/skills';
 
 const ROW_ONE = profile.hero.keywords;
 const ROW_TWO = [...new Set(Object.values(hardSkills).flat())].slice(0, 10);

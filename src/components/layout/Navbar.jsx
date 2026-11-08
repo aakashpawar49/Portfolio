@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'motion/react';
 import { ArrowUpRight, Menu, X } from 'lucide-react';
-import profile from '../data/profile';
-import useActiveSection from '../hooks/useActiveSection';
-import { EASE } from '../lib/motion';
+import profile from '@/data/profile';
+import useActiveSection from '@/hooks/useActiveSection';
+import { EASE } from '@/lib/motion';
 
 const SECTION_IDS = profile.navigation.map((item) => item.href.slice(1));
 

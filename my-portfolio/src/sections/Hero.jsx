@@ -1,111 +1,185 @@
+import { Fragment, useRef } from 'react';
+import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from 'motion/react';
 import { ArrowRight, Download, MapPin } from 'lucide-react';
 import profile from '../data/profile';
+import CodeWindow from '../components/CodeWindow';
+import Counter from '../components/Counter';
+import Magnetic from '../components/Magnetic';
 import SocialLinks from '../components/SocialLinks';
-import logoImage from '../assets/logo.jpg';
+import useMediaQuery from '../hooks/useMediaQuery';
+import { EASE } from '../lib/motion';
+
+const { hero, highlights, resumeUrl, location, socialLinks, email } = profile;
+const ACCENT_WORDS = new Set((hero.headlineAccent ?? '').split(' ').filter(Boolean));
+const HEADLINE = hero.headline.split(' ');
+const HERO_LINKS = [...socialLinks, { name: 'Email', href: `mailto:${email}`, icon: 'Mail' }];
+
+const fadeUp = (delay) => ({
+  initial: { opacity: 0, y: 24 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.9, delay, ease: EASE },
+});
 
 const Hero = () => {
-  const { hero, highlights, resumeUrl, location, socialLinks } = profile;
-  const linkedInLink = socialLinks.find((link) => link.name === 'LinkedIn')?.href;
+  const ref = useRef(null);
+  const reduce = useReducedMotion();
+  // Copy and visual split apart only on the two-column layout; stacked on mobile they would leave a gap.
+  const wide = useMediaQuery('(min-width: 1024px)');
 
-  return (
-    <section
-      id="home"
-      className="relative flex min-h-[85vh] items-center overflow-hidden bg-linear-to-b from-background via-background to-surface pt-20 sm:pt-24"
-    >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(99,102,241,0.25),rgba(17,24,39,0))]" />
-      <div className="relative z-10 mx-auto flex max-w-7xl flex-col-reverse items-center gap-8 px-4 pb-8 pt-6 sm:gap-10 sm:px-6 sm:pb-12 lg:flex-row lg:items-center lg:gap-16 lg:px-8">
-        <div className="w-full space-y-5 text-center sm:space-y-6 lg:w-3/5 lg:text-left">
-          <div className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-primary">
-            {hero.greeting}
-          </div>
+  // Scroll parallax: each layer leaves the viewport at its own speed.
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
+  const depth = (distance, enabled = true) => (reduce || !enabled ? [0, 0] : [0, distance]);
+  const gridY = useTransform(scrollYProgress, [0, 1], depth(140));
+  const auroraY = useTransform(scrollYProgress, [0, 1], depth(360));
+  const copyY = useTransform(scrollYProgress, [0, 1], depth(-160, wide));
+  const visualY = useTransform(scrollYProgress, [0, 1], depth(110, wide));
+  const fade = useTransform(scrollYProgress, [0, 0.7], wide ? [1, 0] : [1, 1]);
 
-          <div className="space-y-2 sm:space-y-3">
-            <h1 className="text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
-              {hero.headline}
-            </h1>
-            <p className="text-sm font-medium text-text-muted sm:text-base md:text-lg">
-              {hero.subheadline}
-            </p>
-          </div>
+  // Pointer parallax, normalised to -0.5…0.5 and smoothed.
+  const pointerX = useMotionValue(0);
+  const pointerY = useMotionValue(0);
+  const smoothX = useSpring(pointerX, { stiffness: 60, damping: 18 });
+  const smoothY = useSpring(pointerY, { stiffness: 60, damping: 18 });
+  const violetX = useTransform(smoothX, [-0.5, 0.5], [-70, 70]);
+  const violetY = useTransform(smoothY, [-0.5, 0.5], [-50, 50]);
+  const mintX = useTransform(smoothX, [-0.5, 0.5], [60, -60]);
+  const mintY = useTransform(smoothY, [-0.5, 0.5], [40, -40]);
 
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 lg:justify-start">
-            {hero.keywords.map((word) => (
-              <span
-                key={word}
-                className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-text-light sm:px-4 sm:py-2 sm:text-sm"
-              >
-                {word}
-              </span>
-            ))}
-          </div>
+  const handlePointerMove = (event) => {
+    if (reduce || event.pointerType !== 'mouse') return;
+    pointerX.set(event.clientX / window.innerWidth - 0.5);
+    pointerY.set(event.clientY / window.innerHeight - 0.5);
+  };
 
-          <div className="flex flex-col gap-3 sm:flex-row sm:justify-center sm:gap-4 lg:justify-start">
-            <a
-              href="#projects"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-2.5 text-xs font-semibold text-white shadow-lg shadow-primary/20 transition hover:bg-primary/90 sm:px-8 sm:py-3 sm:text-sm"
-            >
-              View Projects
-              <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-            </a>
-            <a
+  return (
+    <section
+      id="home"
+      ref={ref}
+      onPointerMove={handlePointerMove}
+      className="relative isolate flex min-h-svh items-center overflow-hidden pt-28 pb-24 sm:pt-32"
+    >
+      {/* Background layers */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+        <motion.div
+          style={{ y: gridY }}
+          className="bg-grid absolute inset-0 [mask-image:radial-gradient(ellipse_70%_60%_at_50%_40%,black,transparent)]"
+        />
+        <motion.div style={{ y: auroraY }} className="absolute inset-0">
+          <motion.div style={{ x: violetX, y: violetY }} className="absolute -top-56 left-[2%] h-176 w-176">
+            <div className="aurora-violet animate-drift h-full w-full rounded-full" />
+          </motion.div>
+          <motion.div style={{ x: mintX, y: mintY }} className="absolute top-[18%] -right-[12%] h-152 w-152">
+            <div className="aurora-mint animate-drift h-full w-full rounded-full [animation-delay:-6s]" />
+          </motion.div>
+          <div className="absolute bottom-[-10%] left-[35%] h-104 w-104">
+            <div className="aurora-coral animate-drift h-full w-full rounded-full [animation-delay:-11s]" />
+          </div>
+        </motion.div>
+        <div className="absolute inset-x-0 bottom-0 h-48 bg-linear-to-b from-transparent to-ink" />
+      </div>
+
+      <div className="mx-auto grid w-full max-w-7xl items-center gap-16 px-5 sm:px-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
+        <motion.div style={{ y: copyY, opacity: fade }}>
+          <motion.p
+            {...fadeUp(0.05)}
+            className="inline-flex items-center gap-2.5 rounded-full border border-line bg-white/3 py-1.5 pr-4 pl-1.5 text-sm text-fg/90 backdrop-blur"
+          >
+            <span className="rounded-full bg-accent/15 px-2.5 py-0.5 font-mono text-[11px] font-medium tracking-wider text-accent uppercase">
+              Portfolio
+            </span>
+            {hero.greeting}
+          </motion.p>
+
+          <h1 className="mt-7 text-[2.6rem] leading-[1.04] font-semibold tracking-[-0.045em] text-balance text-fg sm:text-6xl lg:text-[4.4rem] xl:text-[5rem]">
+            {HEADLINE.map((word, i) => {
+              const clean = word.replace(/[.,]/g, '');
+              const isAccent = ACCENT_WORDS.has(clean);
+              return (
+                <Fragment key={`${word}-${i}`}>
+                  <span className="-mb-[0.14em] inline-block overflow-hidden pb-[0.14em] align-bottom">
+                    <motion.span
+                      className={`inline-block ${isAccent ? 'text-gradient pr-[0.06em] font-serif font-normal italic' : ''}`}
+                      initial={{ y: '115%' }}
+                      animate={{ y: '0%' }}
+                      transition={{ duration: 1, delay: 0.15 + i * 0.06, ease: EASE }}
+                    >
+                      {word}
+                    </motion.span>
+                  </span>{' '}
+                </Fragment>
+              );
+            })}
+          </h1>
+
+          <motion.p {...fadeUp(0.55)} className="mt-7 max-w-xl text-lg leading-relaxed text-muted">
+            {hero.subheadline}
+          </motion.p>
+
+          <motion.div {...fadeUp(0.65)} className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <Magnetic>
+              <a
+                href="#projects"
+                className="group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-full bg-fg px-7 py-4 text-sm font-semibold text-ink sm:w-auto"
+              >
+                <span className="absolute inset-0 -translate-x-full bg-linear-to-r from-accent to-accent-2 transition-transform duration-500 ease-out group-hover:translate-x-0" />
+                <span className="relative">View projects</span>
+                <ArrowRight className="relative h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </a>
+            </Magnetic>
+            <Magnetic>
+              <a
                 href={resumeUrl}
                 download
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/5 px-6 py-2.5 text-xs font-semibold text-text-light transition hover:border-primary/40 hover:text-primary sm:px-8 sm:py-3 sm:text-sm"
-            >
-                Download Resume
-                <Download className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-            </a>
-          </div>
+                className="group inline-flex w-full items-center justify-center gap-2 rounded-full border border-line bg-white/3 px-7 py-4 text-sm font-semibold text-fg backdrop-blur transition hover:border-white/25 hover:bg-white/6 sm:w-auto"
+              >
+                Download résumé
+                <Download className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5" />
+              </a>
+            </Magnetic>
+          </motion.div>
 
-          <div className="flex flex-col items-center gap-2 text-xs text-text-muted sm:flex-row sm:justify-center sm:gap-4 sm:text-sm lg:justify-start lg:gap-6">
-            <div className="inline-flex items-center gap-1.5 sm:gap-2">
-              <MapPin className="h-3.5 w-3.5 text-primary sm:h-4 sm:w-4" />
-              <span>{location}</span>
-            </div>
-            {linkedInLink ? (
-              <a
-                href={linkedInLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-primary transition hover:text-primary/80"
-              >
-                Let's connect on LinkedIn
-                <ArrowRight className="h-3 w-3" />
-              </a>
-            ) : null}
-          </div>
+          <motion.div {...fadeUp(0.75)} className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
+            <SocialLinks links={HERO_LINKS} variant="icon" />
+            <span className="inline-flex items-center gap-2 text-sm text-muted">
+              <MapPin className="h-4 w-4 text-accent" />
+              {location}
+            </span>
+          </motion.div>
 
-          <SocialLinks links={socialLinks} className="justify-center lg:justify-start" />
-        </div>
+          <motion.dl
+            {...fadeUp(0.85)}
+            className="mt-14 grid max-w-xl grid-cols-3 divide-x divide-line border-t border-line pt-8"
+          >
+            {highlights.map((item) => (
+              <div key={item.caption} className="px-4 first:pl-0">
+                <dt className="sr-only">{item.caption}</dt>
+                <dd className="text-3xl font-semibold tracking-tight text-fg sm:text-4xl">
+                  <Counter value={item.label} />
+                </dd>
+                <dd className="mt-1.5 text-xs leading-snug text-muted sm:text-sm">{item.caption}</dd>
+              </div>
+            ))}
+          </motion.dl>
+        </motion.div>
 
-        <div className="relative flex w-full items-center justify-center sm:w-2/3 lg:w-2/5">
-          <div className="relative flex h-56 w-56 items-center justify-center rounded-full bg-linear-to-br from-primary/70 via-primary/30 to-secondary/40 shadow-[0_20px_45px_rgba(99,102,241,0.35)] sm:h-72 sm:w-72 md:h-80 md:w-80 lg:h-96 lg:w-96">
-            <div className="h-44 w-44 overflow-hidden rounded-full border border-white/20 shadow-inner shadow-black/40 sm:h-56 sm:w-56 md:h-64 md:w-64 lg:h-80 lg:w-80">
-              <img
-                src={logoImage}
-                alt={`${profile.name} logo`}
-                className="h-full w-full object-cover"
-              />
-              <span className="sr-only">Logo of {profile.name}</span>
-            </div>
-          </div>
-        </div>
-      </div>
+        <motion.div style={{ y: visualY }} className="relative">
+          <CodeWindow pointerX={smoothX} pointerY={smoothY} />
+        </motion.div>
+      </div>
 
-      {/* Retained the Highlights section but styled it simply at the bottom */}
-      <div className="relative z-10 mx-auto grid max-w-5xl gap-3 px-4 pb-8 sm:grid-cols-3 sm:gap-4 sm:px-6 sm:pb-12 lg:px-8">
-        {highlights.slice(0, 2).map((item) => ( 
-          <div
-            key={item.caption}
-            className="rounded-xl border border-white/10 bg-white/5 px-3 py-3 text-center shadow-lg shadow-black/10 backdrop-blur sm:px-4 sm:py-4"
-          >
-            <p className="text-xl font-bold text-white sm:text-2xl">{item.label}</p>
-            <p className="mt-1 text-xs text-text-muted">{item.caption}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
+      <motion.a
+        href="#about"
+        style={{ opacity: fade }}
+        aria-label="Scroll to About"
+        className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-3 text-muted transition hover:text-fg sm:flex"
+      >
+        <span className="font-mono text-[10px] tracking-[0.3em] uppercase">Scroll</span>
+        <span className="relative h-12 w-px overflow-hidden bg-white/10">
+          <span className="animate-scroll-dot absolute inset-x-0 top-0 h-1/3 bg-linear-to-b from-transparent to-fg" />
+        </span>
+      </motion.a>
+    </section>
+  );
 };
 
 export default Hero;

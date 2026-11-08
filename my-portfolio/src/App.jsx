@@ -1,28 +1,43 @@
+import { MotionConfig } from 'motion/react';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import ScrollProgress from './components/ScrollProgress';
+import CursorGlow from './components/CursorGlow';
 import Hero from './sections/Hero';
+import Marquee from './sections/Marquee';
 import About from './sections/About';
-// import FullProjects from './sections/Projects'; // FullProjects is now a separate page, don't render on home
-import HomeProjects from './sections/HomeProjects';
+import Projects from './sections/Projects';
 import Achievements from './sections/Achievements';
 import Contact from './sections/Contact';
-import Footer from './components/Footer';
+import useLenis from './hooks/useLenis';
 
 function App() {
+  useLenis();
+
   return (
-    <div className="min-h-screen bg-transparent text-text-light antialiased">
+    // reducedMotion="user": Motion drops transform animations when the OS asks for reduced motion.
+    <MotionConfig reducedMotion="user">
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[70] focus:rounded-full focus:bg-fg focus:px-4 focus:py-2 focus:text-sm focus:text-ink"
+      >
+        Skip to content
+      </a>
+      <ScrollProgress />
+      <CursorGlow />
       <Navbar />
 
-      <main>
+      <main id="main">
         <Hero />
+        <Marquee />
         <About />
-        <HomeProjects /> {/* ONLY the 3 featured projects appear here */}
-        {/* The FullProjects list is now a separate link and won't clutter the main page */}
+        <Projects />
         <Achievements />
         <Contact />
       </main>
 
       <Footer />
-    </div>
+    </MotionConfig>
   );
 }
 

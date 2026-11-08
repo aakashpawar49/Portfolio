@@ -1,82 +1,84 @@
+import { Award, Code, GraduationCap, Sparkles, Trophy } from 'lucide-react';
 import { achievementsData, certificationsData } from '../data/achievements';
-import { Trophy, Award, Code, GraduationCap, Sparkles } from 'lucide-react';
+import Reveal from '../components/Reveal';
+import SectionHeading from '../components/SectionHeading';
+import SpotlightCard from '../components/SpotlightCard';
 
-const iconMap = {
-  Trophy,
-  Award,
-  Code,
-  GraduationCap,
-  Sparkles,
-};
+const iconMap = { Trophy, Award, Code, GraduationCap, Sparkles };
 
-const Achievements = () => {
-  return (
-    <section id="achievements" className="bg-background py-16 sm:py-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto mb-12 max-w-4xl text-center">
-          <h2 className="text-4xl font-extrabold text-white sm:text-5xl">
-            Recognition & Certifications
-          </h2>
-          <p className="mt-4 text-lg text-text-muted">
-            Milestones showcasing commitment to continuous learning and technical experimentation.
-          </p>
-        </div>
+const ColumnTitle = ({ Icon, children }) => (
+  <Reveal>
+    <h3 className="mb-6 flex items-center gap-3 font-mono text-xs tracking-[0.25em] text-muted uppercase">
+      <Icon className="h-4 w-4 text-accent" />
+      {children}
+    </h3>
+  </Reveal>
+);
 
-        <div className="grid gap-12 lg:grid-cols-2">
-          <div className="space-y-6">
-            <div className="flex items-center gap-3">
-              <Trophy className="h-6 w-6 text-secondary" />
-              <h3 className="text-xl font-semibold text-white">Competitive Achievements</h3>
-            </div>
-            <div className="space-y-4">
-              {achievementsData.map((item) => {
-                const IconComponent = iconMap[item.icon] || Award;
-                return (
-                  <article
-                    key={item.title}
-                    className="flex items-start gap-4 rounded-xl border border-secondary/20 bg-white/5 p-4 shadow-lg shadow-black/10 transition hover:border-secondary/60"
-                  >
-                    <IconComponent className="h-6 w-6 shrink-0 text-secondary" />
-                    <div>
-                      <p className="text-base font-semibold text-white">{item.title}</p>
-                      <p className="mt-1 text-sm text-text-muted">{item.description}</p>
-                      <span className="mt-2 inline-flex rounded-full border border-secondary/30 px-3 py-0.5 text-xs uppercase tracking-wide text-secondary/80">
-                        {item.year}
-                      </span>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
-          </div>
+const Achievements = () => (
+  <section id="achievements" className="relative overflow-x-clip py-24 sm:py-32">
+    <div
+      aria-hidden="true"
+      className="aurora-mint pointer-events-none absolute top-1/3 -right-40 h-128 w-128 rounded-full opacity-70"
+    />
 
-          <div className="space-y-6">
-            <div className="flex items-center gap-3">
-              <GraduationCap className="h-6 w-6 text-primary" />
-              <h3 className="text-xl font-semibold text-white">Professional Certifications</h3>
-            </div>
-            <div className="space-y-4">
-              {certificationsData.map((item) => {
-                const IconComponent = iconMap[item.icon] || Code;
-                return (
-                  <article
-                    key={item.title}
-                    className="flex items-start gap-4 rounded-xl border border-primary/20 bg-white/5 p-4 shadow-lg shadow-black/10 transition hover:border-primary/60"
-                  >
-                    <IconComponent className="h-6 w-6 shrink-0 text-primary" />
-                    <div>
-                      <p className="text-base font-semibold text-white">{item.title}</p>
-                      <p className="mt-1 text-sm text-text-muted">{item.details}</p>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
+    <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
+      <SectionHeading
+        index="03"
+        label="Recognition"
+        title="Recognition & certifications"
+        accent="certifications"
+        description="Milestones showcasing commitment to continuous learning and technical experimentation."
+      />
+
+      <div className="grid gap-14 lg:grid-cols-2 lg:gap-10">
+        <div>
+          <ColumnTitle Icon={Trophy}>Competitive achievements</ColumnTitle>
+          <div className="space-y-4">
+            {achievementsData.map((item, i) => {
+              const Icon = iconMap[item.icon] || Award;
+              return (
+                <Reveal key={item.title} delay={i * 0.08}>
+                  <SpotlightCard className="p-6 sm:p-8">
+                    <div className="flex items-start justify-between gap-6">
+                      <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-linear-to-br from-accent/25 to-accent-2/15 text-fg ring-1 ring-white/10">
+                        <Icon className="h-5 w-5" />
+                      </span>
+                      <span className="font-mono text-sm text-muted">{item.year}</span>
+                    </div>
+                    <p className="mt-6 text-xl font-semibold tracking-tight text-fg">{item.title}</p>
+                    <p className="mt-2 leading-relaxed text-muted">{item.description}</p>
+                  </SpotlightCard>
+                </Reveal>
+              );
+            })}
+          </div>
+        </div>
+
+        <div>
+          <ColumnTitle Icon={GraduationCap}>Professional certifications</ColumnTitle>
+          <Reveal>
+            <SpotlightCard className="divide-y divide-line">
+              {certificationsData.map((item) => {
+                const Icon = iconMap[item.icon] || Code;
+                return (
+                  <div key={item.title} className="group flex items-start gap-5 p-6 sm:p-8">
+                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-line bg-white/3 text-accent transition duration-300 group-hover:border-accent/50 group-hover:bg-accent/10">
+                      <Icon className="h-5 w-5" />
+                    </span>
+                    <div>
+                      <p className="text-lg font-semibold tracking-tight text-fg">{item.title}</p>
+                      <p className="mt-1 text-sm leading-relaxed text-muted">{item.details}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </SpotlightCard>
+          </Reveal>
+        </div>
+      </div>
+    </div>
+  </section>
+);
 
 export default Achievements;

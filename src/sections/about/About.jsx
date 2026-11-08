@@ -1,10 +1,10 @@
 import { BrainCircuit, Code, GitBranch, Layers, Users } from 'lucide-react';
-import profile from '../data/profile';
-import { hardSkills, softSkills } from '../data/skills';
-import Reveal from '../components/Reveal';
-import ScrollRevealText from '../components/ScrollRevealText';
-import SectionHeading from '../components/SectionHeading';
-import SpotlightCard from '../components/SpotlightCard';
+import profile from '@/data/profile';
+import { hardSkills, softSkills } from '@/data/skills';
+import Reveal from '@/components/motion/Reveal';
+import ScrollRevealText from '@/components/motion/ScrollRevealText';
+import SectionHeading from '@/components/ui/SectionHeading';
+import SpotlightCard from '@/components/motion/SpotlightCard';
 
 const CATEGORY_ICONS = {
   Languages: Code,

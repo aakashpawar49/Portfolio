@@ -1,14 +1,14 @@
 import { useRef } from 'react';
 import { motion, useScroll } from 'motion/react';
 import { ArrowUpRight, Github } from 'lucide-react';
-import projectsData from '../data/projects';
-import profile from '../data/profile';
-import ProjectCard from '../components/ProjectCard';
-import Magnetic from '../components/Magnetic';
-import Reveal from '../components/Reveal';
-import SectionHeading from '../components/SectionHeading';
-import useMediaQuery from '../hooks/useMediaQuery';
-import { EASE } from '../lib/motion';
+import projectsData from '@/data/projects';
+import profile from '@/data/profile';
+import ProjectCard from '@/sections/projects/ProjectCard';
+import Magnetic from '@/components/motion/Magnetic';
+import Reveal from '@/components/motion/Reveal';
+import SectionHeading from '@/components/ui/SectionHeading';
+import useMediaQuery from '@/hooks/useMediaQuery';
+import { EASE } from '@/lib/motion';
 
 const featured = projectsData.filter((project) => project.isMajor);
 const others = projectsData.filter((project) => !project.isMajor);

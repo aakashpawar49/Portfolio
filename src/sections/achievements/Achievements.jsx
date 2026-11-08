@@ -1,8 +1,8 @@
 import { Award, Code, GraduationCap, Sparkles, Trophy } from 'lucide-react';
-import { achievementsData, certificationsData } from '../data/achievements';
-import Reveal from '../components/Reveal';
-import SectionHeading from '../components/SectionHeading';
-import SpotlightCard from '../components/SpotlightCard';
+import { achievementsData, certificationsData } from '@/data/achievements';
+import Reveal from '@/components/motion/Reveal';
+import SectionHeading from '@/components/ui/SectionHeading';
+import SpotlightCard from '@/components/motion/SpotlightCard';
 
 const iconMap = { Trophy, Award, Code, GraduationCap, Sparkles };
 

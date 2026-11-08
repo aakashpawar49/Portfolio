@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { EASE } from '../lib/motion';
+import { EASE } from '@/lib/motion';
 
 // Fades and lifts its children into place the first time they scroll into view.
 const Reveal = ({ children, delay = 0, y = 28, className }) => (

@@ -1,10 +1,10 @@
 import { useRef, useState } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
 import { ArrowUpRight, Check, Copy, MapPin, Send } from 'lucide-react';
-import profile from '../data/profile';
-import Magnetic from '../components/Magnetic';
-import Reveal from '../components/Reveal';
-import SocialLinks from '../components/SocialLinks';
+import profile from '@/data/profile';
+import Magnetic from '@/components/motion/Magnetic';
+import Reveal from '@/components/motion/Reveal';
+import SocialLinks from '@/components/ui/SocialLinks';
 
 const inputClass =
   'mt-2 w-full rounded-xl border border-line bg-ink/60 px-4 py-3.5 font-sans text-sm tracking-normal normal-case text-fg placeholder:text-muted/60 transition focus:border-accent/70 focus:bg-ink focus:ring-4 focus:ring-accent/15 focus:outline-none';

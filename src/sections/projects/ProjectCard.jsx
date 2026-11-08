@@ -1,8 +1,8 @@
 import { useRef } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
 import { ArrowUpRight, Bot, BrainCircuit, Check, Code, Crown, FlaskConical, Github, ShoppingBag } from 'lucide-react';
-import RichText from './RichText';
-import { EASE } from '../lib/motion';
+import RichText from '@/components/ui/RichText';
+import { EASE } from '@/lib/motion';
 
 const ICONS = { Bot, BrainCircuit, Crown, FlaskConical, ShoppingBag };
 const ACCENTS = ['#8b7cff', '#3ee6b4', '#ff8a5b'];

@@ -9,6 +9,7 @@ import Reveal from '@/components/motion/Reveal';
 import SectionHeading from '@/components/ui/SectionHeading';
 import useMediaQuery from '@/hooks/useMediaQuery';
 import { EASE } from '@/lib/motion';
+import { getRepos, hasLiveLink } from '@/lib/projects';
 
 const featured = projectsData.filter((project) => project.isMajor);
 const others = projectsData.filter((project) => !project.isMajor);
@@ -32,7 +33,7 @@ const Projects = () => {
           label="Selected work"
           title="Featured projects"
           accent="projects"
-          description="Core full-stack applications demonstrating API architecture, complex backend logic, and MERN proficiency."
+          description="Core full-stack applications demonstrating API architecture, complex backend logic, and end-to-end delivery across TypeScript, Next.js and MERN stacks."
         />
 
         <div ref={stackRef} className="relative">
@@ -55,7 +56,8 @@ const Projects = () => {
             </Reveal>
             <ul className="mt-6 border-t border-line">
               {others.map((project, i) => {
-                const hasLiveLink = Boolean(project.liveLink && project.liveLink !== '#');
+                const hasLive = hasLiveLink(project);
+                const repoHref = project.privateRepos ? null : getRepos(project)[0]?.href;
                 return (
                   <motion.li
                     key={project.id}
@@ -74,23 +76,29 @@ const Projects = () => {
                     </span>
                     <div>
                         <h4 className="text-2xl font-semibold tracking-[-0.03em] text-fg sm:text-3xl">
-                          {/* ::after stretches the link over the whole row */}
-                          <a
-                            href={project.githubLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="after:absolute after:inset-0 after:content-['']"
-                          >
+                          {repoHref ? (
+                            // ::after stretches the link over the whole row
+                            <a
+                              href={repoHref}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="after:absolute after:inset-0 after:content-['']"
+                            >
+                              <span className="inline-block transition-transform duration-500 group-hover:translate-x-2">
+                                {project.title}
+                              </span>
+                            </a>
+                          ) : (
                             <span className="inline-block transition-transform duration-500 group-hover:translate-x-2">
                               {project.title}
                             </span>
-                          </a>
+                          )}
                         </h4>
                         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">{project.summary}</p>
                         <p className="mt-3 font-mono text-[11px] text-fg/60">{project.tech.join('  ·  ')}</p>
                       </div>
                       <div className="relative z-10 flex gap-2">
-                        {hasLiveLink ? (
+                        {hasLive ? (
                           <a
                             href={project.liveLink}
                             target="_blank"

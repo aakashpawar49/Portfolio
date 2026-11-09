@@ -2,7 +2,7 @@
 
 Personal portfolio of Aakash Pawar, full-stack engineer building AI-integrated web applications.
 
-**Live:** https://portfolio-irwe.vercel.app/
+**Live:** https://portfolio-three-alpha-64bztk8gkp.vercel.app/
 
 Built with React 19, Vite, Tailwind CSS v4, [Motion](https://motion.dev) (scroll and pointer animation) and [Lenis](https://lenis.darkroom.engineering) (smooth scrolling).
 

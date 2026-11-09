@@ -1,18 +1,30 @@
 import { useRef } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
-import { ArrowUpRight, Bot, BrainCircuit, Check, Code, Crown, FlaskConical, Github, ShoppingBag } from 'lucide-react';
+import {
+  ArrowUpRight,
+  Bot,
+  BrainCircuit,
+  Check,
+  Code,
+  Crown,
+  FlaskConical,
+  Github,
+  Lock,
+  Shirt,
+  ShoppingBag,
+} from 'lucide-react';
 import RichText from '@/components/ui/RichText';
 import { EASE } from '@/lib/motion';
+import { getRepos, hasLiveLink, projectSlug } from '@/lib/projects';
 
-const ICONS = { Bot, BrainCircuit, Crown, FlaskConical, ShoppingBag };
-const ACCENTS = ['#8b7cff', '#3ee6b4', '#ff8a5b'];
+const ICONS = { Bot, BrainCircuit, Crown, FlaskConical, Shirt, ShoppingBag };
+const ACCENTS = ['#8b7cff', '#3ee6b4', '#ff8a5b', '#5cc8ff'];
 const BARS = [
   [38, 62, 48, 80, 56, 92, 70],
   [70, 45, 88, 60, 74, 52, 96],
   [55, 82, 40, 68, 90, 62, 78],
+  [64, 50, 76, 92, 58, 84, 66],
 ];
-
-const repoName = (url = '') => url.split('/').filter(Boolean).pop() ?? 'project';
 
 // Abstract app mock-up standing in for a screenshot; zooms out (parallax) as the card scrolls in.
 const ProjectVisual = ({ project, index, accent, progress, reduce }) => {
@@ -42,7 +54,7 @@ const ProjectVisual = ({ project, index, accent, progress, reduce }) => {
           <span className="h-2 w-2 rounded-full bg-white/20" />
           <span className="h-2 w-2 rounded-full bg-white/20" />
           <span className="h-2 w-2 rounded-full bg-white/20" />
-          <span className="ml-2 truncate font-mono text-[10px] text-muted">{repoName(project.githubLink)}</span>
+          <span className="ml-2 truncate font-mono text-[10px] text-muted">{projectSlug(project)}</span>
         </div>
         <div className="grid grid-cols-[3.5rem_1fr] gap-4 p-4 sm:grid-cols-[4.5rem_1fr]">
           <div className="space-y-2.5 pt-1">
@@ -103,7 +115,8 @@ const ProjectCard = ({ project, index, total, stackProgress, stacked }) => {
   const ref = useRef(null);
   const reduce = useReducedMotion();
   const accent = ACCENTS[index % ACCENTS.length];
-  const hasLiveLink = Boolean(project.liveLink && project.liveLink !== '#');
+  const hasLive = hasLiveLink(project);
+  const repos = getRepos(project);
 
   const targetScale = 1 - (total - 1 - index) * 0.05;
   const scale = useTransform(stackProgress, [index / total, 1], [1, stacked && !reduce ? targetScale : 1]);
@@ -157,7 +170,7 @@ const ProjectCard = ({ project, index, total, stackProgress, stacked }) => {
             </ul>
 
             <div className="mt-8 flex flex-wrap gap-3 lg:mt-auto lg:pt-8">
-              {hasLiveLink ? (
+              {hasLive ? (
                 <a
                   href={project.liveLink}
                   target="_blank"
@@ -168,15 +181,25 @@ const ProjectCard = ({ project, index, total, stackProgress, stacked }) => {
                   <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </a>
               ) : null}
-              <a
-                href={project.githubLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 rounded-full border border-line px-5 py-2.5 text-sm font-semibold text-fg transition hover:border-white/25 hover:bg-white/5"
-              >
-                <Github className="h-4 w-4" />
-                Source code
-              </a>
+              {project.privateRepos ? (
+                <p className="inline-flex items-center gap-2 rounded-full border border-dashed border-line px-5 py-2.5 text-sm text-muted">
+                  <Lock className="h-4 w-4" />
+                  Private codebase{repos.length > 1 ? ` · ${repos.map((repo) => repo.label).join(', ')}` : ''}
+                </p>
+              ) : (
+                repos.map((repo) => (
+                  <a
+                    key={repo.href}
+                    href={repo.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center gap-2 rounded-full border border-line px-5 py-2.5 text-sm font-semibold text-fg transition hover:border-white/25 hover:bg-white/5"
+                  >
+                    <Github className="h-4 w-4" />
+                    {repo.label}
+                  </a>
+                ))
+              )}
             </div>
           </div>
 

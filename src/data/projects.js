@@ -1,4 +1,35 @@
+// Fields:
+//   isMajor      true = featured card, false = "More projects" list
+//   githubLink   single repository; or `repos: [{ label, href }]` for several
+//   privateRepos true = repositories are private: links are hidden and a "private codebase" note shows
+//   liveLink     public demo URL or null
+//   icon         lucide-react icon name used in the card mock-up
 const projectsData = [
+    // -----------------------------------------------------
+    // Stravn Clothing: API + storefront + mobile app (isMajor: true)
+    // -----------------------------------------------------
+    {
+        id: 6,
+        title: 'Stravn Clothing — D2C E-Commerce Platform',
+        slug: 'stravn-clothing',
+        summary:
+            'Complete commerce system for an Indian direct-to-consumer clothing brand: a REST API, a Next.js storefront with a role-based admin panel, and a mobile app, all served by one API.',
+        details: [
+            'Designed an **Express 5 + TypeScript** REST API on **PostgreSQL** (Prisma, Supabase): catalog, inventory that can never go negative, checkout with 15-minute stock holds, coupons, gift cards and GST.',
+            'Integrated **Razorpay** UPI-first payments with webhook and background reconciliation, refunds and RTO, behind five staff roles and an audit log of every admin change.',
+            'Built the **Next.js 16** storefront and admin panel (typo-tolerant search, SEO, consent and data erasure); a **React Native + Expo** app is in planning on the same API.',
+        ],
+        icon: 'Shirt',
+        tech: ['TypeScript', 'Express 5', 'Prisma', 'PostgreSQL', 'Next.js 16', 'Razorpay', 'Cloudinary', 'React Native'],
+        repos: [
+            { label: 'API', href: 'https://github.com/aakashpawar49/stravn-clothing-be' },
+            { label: 'Storefront', href: 'https://github.com/aakashpawar49/stravn-clothing-fe' },
+            { label: 'Mobile app', href: 'https://github.com/aakashpawar49/stravn-clothing-mobile' },
+        ],
+        privateRepos: true,
+        liveLink: null,
+        isMajor: true,
+    },
     // -----------------------------------------------------
     // PROJECT 1: Python ETL Pipeline (NEW - HIGH RELEVANCE, isMajor: true)
     // -----------------------------------------------------
